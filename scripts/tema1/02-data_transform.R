@@ -1,7 +1,11 @@
+# PAQUETE DPLYR
+# Puede haber conflicto al usar dlpyr porque algunas funciones sobreescriben las funciones bases de R, si se quiere usar las
+# func bases mientras se tiene cargado le paquete dplyr se debe escribir stats::filter (filter o la func que se quiera usar)
+
 library(tidyverse)
 library(nycflights13)
 
-
+# Dentro de nycflights13 hay varios datasets, usaremos flights
 tt<-nycflights13::flights
 ?flights
 View(flights)
@@ -23,15 +27,18 @@ tail(flights)
 ## * arrange() -> reordenar las filas
 ## * select() -> seleccionar variables por sus nombres
 ## * mutate() -> crea nuevas variables con funciones a partir de las existentes
-## * summarise() -> colapsar varios valores para dar un resumen de los mismos
+## * summarise() -> colapsar varios valores para dar un resumen de los mismos (media, min, max, desv standar, etc)
 
-## * group_by() -> opera la función a la que acompaña grupo a grupo
+## * group_by() -> sirve para que la función a la que acompaña opere grupo a grupo
 
 ## 1 - data frame 
 ## 2 - operaciones que queremos hacer a las variables del data frame
 ## 3 - resultado en un nuevo data frame
 
 ### FILTER
+# variable <- filter(dataset, nombredecolumna == valor, nombredecolumna == valor), se asignó a una variable para que el tibble no se muestre por consola
+# si quiero que se muestre poner toda la sentencia entre ()
+# ( jan1 <- filter(flights, month == 1, day == 1) )
 jan1 <- filter(flights, month == 1, day == 1)
 flights %>% 
   filter(month == 1, day == 1) %>%
@@ -42,17 +49,17 @@ may19 <- filter(flights, month == 5, day == 19)
 (dec25 <- filter(flights, month == 12, day == 25))
 # >, >=, <, <=, ==, !=
 
+# filter(flights, month = 5) si se usa un solo = sale error, debe usarse ==
 filter(flights, month == 5)
 
-2 == 2
-
-sqrt(2)^2 == 2
+# sqrt(2)^2 == 2 esto es FALSE porque la raiz de 2 al cuadrado sale 2 pero no exactamente 2, sino l.99999999...
 sqrt(2)^2 - 2
+#si usamos near si podemos igualar near(sqrt(2)^2, 2) == 2 y será TRUE
 near(sqrt(2)^2, 2)
 ?near
-1/pi * pi == 1
-1/49 * 49 == 1
-near(1/49*49, 1)
+1/pi * pi == 1 #TRUE
+1/49 * 49 == 1 # FALSE
+near(1/49*49, 1) #TRUE
 
 filter(flights, month == 5 | month == 6)
 
